@@ -3,7 +3,7 @@
 #include <signal.h>
 
 int g_exit_status = 0;
-
+//bite
 void	handle_sigint(int sig)
 {
 	(void)sig;
