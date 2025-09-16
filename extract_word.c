@@ -164,6 +164,7 @@ char *extract_word(t_parser *parser, t_varlist **head_var)
 	char			*part;
 	(void)head_var;
 	char			*res;
+	char			*new;
 
 	buf = malloc(sizeof(char) * (ft_strlen(parser->input) + 1));
 	if (!buf)
@@ -188,16 +189,24 @@ char *extract_word(t_parser *parser, t_varlist **head_var)
 				free(tmp);
 			}
 			// printf("part is: %s\n", part);
-			res = ft_strjoin(res, part);
+			new = ft_strjoin(res, part);
+			free(res);
+			res = new;
 			free(part);
 		}
 		if (parser->input[cur->start_qt_input] == '\'')
-			res = ft_strjoin(res, cur->part);
+		{
+			new = ft_strjoin(res, cur->part);
+			free(res);
+			res = new;
+		}
 		else if (parser->input[cur->start_qt_input] == '"')
 		{
 			tmp = reg_dollar_sign(cur->part, head_var);
-			res = ft_strjoin(res, tmp);
+			new = ft_strjoin(res, tmp);
 			free(tmp);
+			free(res);
+			res = new;
 		}
 		// printf("res is: %s\n", res);
 		last_pos = cur->end_qt_buf + 1;
@@ -216,7 +225,9 @@ char *extract_word(t_parser *parser, t_varlist **head_var)
 			free(tmp);
 		}
 		// printf("part is: %s\n", part);
-		res = ft_strjoin(res, part);
+		new = ft_strjoin(res, part);
+		free(res);
+		res = new;
 		free(part);
 	}
 	// printf("final res string is: %s\n", res);
